@@ -2,6 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import * as dotenv from "dotenv"
 
+import connectDB from "./config/connectDB";
 import viewEngine from "./config/viewEngine";
 import initWebRoutes from "./routes/web";
 
@@ -17,8 +18,8 @@ app.use(bodyParser.urlencoded({ extended: true }))
 viewEngine(app);
 //use Route
 initWebRoutes(app);
-
-
+//connect DB
+connectDB()
 
 
 app.listen(port, () => {
