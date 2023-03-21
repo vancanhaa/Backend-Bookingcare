@@ -18,8 +18,20 @@ const createNewUser = async (data) => {
         role_id: data.roleId,
         phone_number: data.phoneNumber,
       });
-
       resolve("create a new user success!");
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+const getAllUser = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const users = await db.User.findAll({
+        raw: true,
+      });
+      resolve(users);
     } catch (error) {
       reject(error);
     }
@@ -39,4 +51,5 @@ const hashUserPassword = (password) => {
 
 module.exports = {
   createNewUser,
+  getAllUser,
 };
