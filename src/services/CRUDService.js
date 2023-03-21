@@ -28,10 +28,50 @@ const createNewUser = async (data) => {
 const getAllUser = () => {
   return new Promise(async (resolve, reject) => {
     try {
-      const users = await db.User.findAll({
+      const users = await db.User.findAll({ raw: true });
+      resolve(users);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+const getUserInfoById = (userId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const user = await db.User.findOne({
+        where: { id: userId },
         raw: true,
       });
-      resolve(users);
+      if (user) resolve(user);
+      resolve([]);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+const updateUserData = (data) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const user = await db.User.findOne({
+        where: { id: data.id },
+      });
+      if (user) {
+        await user.update({
+          first_name: data.firstName,
+          last_name: data.lastName,
+          address: data.address,
+          phone_number: data.phoneNumber,
+          gender: data.gender,
+          role_id: data.roleId,
+        });
+        await user.save();
+        const allUsers = await db.User.findAll({ raw: true });
+        resolve(allUsers);
+      } else {
+        resolve([]);
+      }
     } catch (error) {
       reject(error);
     }
@@ -52,4 +92,6 @@ const hashUserPassword = (password) => {
 module.exports = {
   createNewUser,
   getAllUser,
+  getUserInfoById,
+  updateUserData,
 };

@@ -1,5 +1,10 @@
 import db from "../models";
-import { createNewUser, getAllUser } from "../services/CRUDService";
+import {
+  createNewUser,
+  getAllUser,
+  getUserInfoById,
+  updateUserData,
+} from "../services/CRUDService";
 const getHomePage = async (req, res) => {
   try {
     const data = await db.User.findAll();
@@ -22,14 +27,35 @@ const getCRUD = (req, res) => {
 
 const postCRUD = async (req, res) => {
   const message = await createNewUser(req.body);
-  console.log(message);
   return res.send("post crud from server");
 };
 
 const displayGetCRUD = async (req, res) => {
   const data = await getAllUser();
-  return res.render("display-crud.ejs", {
+  return res.render("displayCRUD.ejs", {
     dataTable: data,
+  });
+};
+
+const getEditCRUD = async (req, res) => {
+  const userId = req.query.id;
+  if (userId) {
+    const userData = await getUserInfoById(userId);
+    // check userData
+    return res.render("editCRUD.ejs", {
+      userData: userData,
+    });
+  } else {
+    return res.send("User not found");
+  }
+};
+
+const putCRUD = async (req, res) => {
+  const data = req.body;
+  const allUsers = await updateUserData(data);
+
+  return res.render("displayCRUD", {
+    dataTable: allUsers,
   });
 };
 
@@ -39,4 +65,6 @@ module.exports = {
   getCRUD,
   postCRUD,
   displayGetCRUD,
+  getEditCRUD,
+  putCRUD,
 };
