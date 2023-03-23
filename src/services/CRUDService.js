@@ -108,7 +108,7 @@ const hashUserPassword = (password) => {
   });
 };
 
-module.exports = {
+export {
   createNewUser,
   getAllUser,
   getUserInfoById,

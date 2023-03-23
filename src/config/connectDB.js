@@ -4,7 +4,7 @@ const { Sequelize } = require("sequelize");
 const sequelize = new Sequelize("learn_nodejs", "root", null, {
   host: "localhost",
   dialect: "mysql",
-  "logging": false
+  logging: false,
 });
 
 const connectDB = async () => {
@@ -16,4 +16,4 @@ const connectDB = async () => {
   }
 };
 
-module.exports = connectDB;
+export { connectDB };

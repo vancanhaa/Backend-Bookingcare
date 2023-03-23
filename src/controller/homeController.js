@@ -72,7 +72,7 @@ const deleteCRUD = async (req, res) => {
   }
 };
 
-module.exports = {
+export {
   getHomePage,
   getAboutPage,
   getCRUD,
