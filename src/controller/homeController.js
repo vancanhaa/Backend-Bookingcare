@@ -1,11 +1,6 @@
-import db from "../models";
-import {
-  createNewUser,
-  getAllUser,
-  getUserInfoById,
-  updateUserData,
-  deleteUserById,
-} from "../services/CRUDService";
+const db = require("../models");
+const CRUDService = require("../services/CRUDService");
+
 const getHomePage = async (req, res) => {
   try {
     const data = await db.User.findAll();
@@ -27,12 +22,12 @@ const getCRUD = (req, res) => {
 };
 
 const postCRUD = async (req, res) => {
-  const message = await createNewUser(req.body);
+  const message = await CRUDService.createNewUser(req.body);
   return res.send("post crud from server");
 };
 
 const displayGetCRUD = async (req, res) => {
-  const data = await getAllUser();
+  const data = await CRUDService.getAllUser();
   return res.render("displayCRUD.ejs", {
     dataTable: data,
   });
@@ -41,7 +36,7 @@ const displayGetCRUD = async (req, res) => {
 const getEditCRUD = async (req, res) => {
   const userId = req.query.id;
   if (userId) {
-    const userData = await getUserInfoById(userId);
+    const userData = await CRUDService.getUserInfoById(userId);
     // check userData
     return res.render("editCRUD.ejs", {
       userData: userData,
@@ -53,7 +48,7 @@ const getEditCRUD = async (req, res) => {
 
 const putCRUD = async (req, res) => {
   const data = req.body;
-  const allUsers = await updateUserData(data);
+  const allUsers = await CRUDService.updateUserData(data);
 
   return res.render("displayCRUD", {
     dataTable: allUsers,
@@ -63,7 +58,7 @@ const putCRUD = async (req, res) => {
 const deleteCRUD = async (req, res) => {
   const id = req.query.id;
   if (id) {
-    const data = await deleteUserById(id);
+    const data = await CRUDService.deleteUserById(id);
     return res.render("displayCRUD.ejs", {
       dataTable: data,
     });
@@ -72,7 +67,7 @@ const deleteCRUD = async (req, res) => {
   }
 };
 
-export {
+module.exports = {
   getHomePage,
   getAboutPage,
   getCRUD,

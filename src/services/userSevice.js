@@ -1,6 +1,7 @@
-import { where } from "sequelize";
-import bcrypt from "bcryptjs";
-import db from "../models/index";
+const { where } = require("sequelize");
+const bcrypt = require("bcryptjs");
+
+const db = require("../models/index");
 
 const handleUserLogin = (email, password) => {
   return new Promise(async (resolve, reject) => {
@@ -62,4 +63,6 @@ const checkUserEmail = (email) => {
   });
 };
 
-export { handleUserLogin };
+module.exports = {
+  handleUserLogin,
+};

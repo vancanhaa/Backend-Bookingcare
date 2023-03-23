@@ -1,6 +1,5 @@
-import bcrypt from "bcryptjs";
-
-import db from "../models/index";
+const bcrypt = require("bcryptjs");
+const db = require("../models/index");
 
 const salt = bcrypt.genSaltSync(10);
 
@@ -108,7 +107,7 @@ const hashUserPassword = (password) => {
   });
 };
 
-export {
+module.exports = {
   createNewUser,
   getAllUser,
   getUserInfoById,

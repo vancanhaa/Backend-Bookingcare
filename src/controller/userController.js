@@ -1,4 +1,5 @@
-import { handleUserLogin } from "../services/userSevice";
+// import { handleUserLogin } from "../services/userSevice";
+const userSevice = require("../services/userSevice");
 const handleLogin = async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
@@ -13,7 +14,7 @@ const handleLogin = async (req, res) => {
     });
   }
 
-  const userData = await handleUserLogin(email, password);
+  const userData = await userSevice.handleUserLogin(email, password);
   const { errorCode, message, userInfo } = userData;
   return res.status(200).json({
     errorCode,
@@ -25,4 +26,7 @@ const handleLogout = (req, res) => {
   return res.send("handleLogout from userController");
 };
 
-export { handleLogin, handleLogout };
+module.exports = {
+  handleLogin,
+  handleLogout,
+};
