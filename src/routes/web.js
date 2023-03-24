@@ -17,7 +17,11 @@ const initWebRoutes = (app) => {
 
   router.post("/api/login", userController.handleLogin);
   router.get("/api/logout", userController.handleLogout);
-
+  router.get("/api/users", userController.handleGetAllUsers);
+  router.get("/api/users/:id", userController.handleGetUserById);
+  router.post("/api/users/create", userController.handleCreateNewUser);
+  router.put("/api/users/:id", userController.handleUpdateUser);
+  router.delete("/api/users/:id", userController.handleDeleteUser);
   return app.use("/", router);
 };
 
