@@ -68,9 +68,11 @@ const handleCreateNewUser = async (req, res) => {
     });
   }
   const data = await userSevice.createNewUser(dataByForm);
-  return res.status(200).json({
-    ...data,
-  });
+  if (!data.errorCode) {
+    return res.status(200).json(data);
+  } else {
+    return res.status(500).json(data);
+  }
 };
 
 const handleUpdateUser = async (req, res) => {

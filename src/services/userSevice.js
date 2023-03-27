@@ -63,8 +63,6 @@ const getAllUser = () => {
 };
 
 const getUserById = (idUser) => {
-  console.log("idUser:", idUser);
-
   return new Promise(async (resolve, reject) => {
     try {
       const userInfo = await db.User.findOne({
@@ -100,6 +98,7 @@ const createNewUser = async (data) => {
           userInfo: await db.User.findOne({
             where: { email: data.email },
           }),
+          errorCode: 0,
           message: "register success",
         });
       } else {
